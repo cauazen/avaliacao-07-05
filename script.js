@@ -1,15 +1,20 @@
+
+
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
+const path = require('path');
+const filePath = path.join(__dirname, 'logs.txt');
 
-function registrarLog(nomeAluno) {
-  const id = uuidv4();
-  const dataHora = new Date().toISOString();
-  const logMessage = `${id} - ${dataHora} - ${nomeAluno}\n`;
+function logMessage(message) {
+const id = uuidv4();
+const timestamp = new Date().toISOString();
+const logEntry = `${id} - ${timestamp} - ${message}\n`;
 
-  fs.appendFile('logs.txt', logMessage, (err) => {
-    if (err) throw err;
-    console.log('Log registrado com sucesso!');
-  });
-}
-
-module.exports = { registrarLog };
+    fs.appendFile(logFilePath, logEntry, (err) => {
+        if (err) {
+            console.error('Erro ao escrever no arquivo de log:', err);
+        } else {
+            console.log('Mensagem registrada com sucesso!');
+        }
+    });
+    }
